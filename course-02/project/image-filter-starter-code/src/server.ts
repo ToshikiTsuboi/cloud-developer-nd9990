@@ -29,7 +29,7 @@ import { isUri } from 'valid-url';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
-app.get('/filteredimage', async(req, res) => {
+app.get('/filteredimage', async(req: express.Request, res: express.Response) => {
   let { image_url } = req.query;
 
   if (!image_url){
@@ -41,9 +41,15 @@ app.get('/filteredimage', async(req, res) => {
   }
 
   const filteredpath = await filterImageFromURL(image_url);
-  deleteLocalFiles;
 
-  return res.status(200).send(filteredpath);
+  //res.sendFile(filteredpath);
+  //deleteLocalFiles([filteredpath]);
+
+  res.sendFile(filteredpath, {}, () => deleteLocalFiles([filteredpath]));
+
+  // return res.status(200);
+
+  // https://www.olympus-imaging.jp/product/dslr/e30/sample/images/index_image_02_l.jpg
 })
 
 
